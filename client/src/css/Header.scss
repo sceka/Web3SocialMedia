@@ -68,3 +68,54 @@
   justify-content: center;
   align-items: center;
 }
+
+.token-container {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 50px;
+  border-radius: 10px;
+  background-color: blue;
+  justify-content: space-between;
+  align-items: center;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.token-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  font-size: 20px;
+}
+
+.ethereum-image {
+  width: 35px;
+}
+
+.ethereum-wrapper {
+  display: flex;
+  width: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.price-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.price {
+  font-size: 25px;
+}
+
+.close-button {
+  width: 20px;
+  position: absolute;
+  top: 10%;
+  left: 93%;
+}

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../css/Header.scss";
 import logo from "../statics/metamask.png";
 import Web3 from "web3";
+import ethereum from "../statics/ethereum.png";
+import closeButton from "../statics/close-button.png";
 // import { ethers } from "ethers";
 
 const Header = () => {
@@ -74,6 +76,9 @@ const Header = () => {
     <div className="displaying">
       <div className="container">
         <div className="logo">Company Name</div>
+        <div>
+          <div onClick={() => setToggle(true)}>Show balances</div>
+        </div>
         <div className="network-container">
           <div className="network" onClick={() => checkNetwork(network)}>
             Network: {nameNetwork}
@@ -83,11 +88,26 @@ const Header = () => {
             <span>{!address ? "Connect Wallet" : address}</span>
           </button>
         </div>
-        <div>
-          <div onClick={() => setToggle(true)}>Show balances</div>
-        </div>
       </div>
-      {toggle === true && <div className="toggle-container">Hello</div>}
+      {toggle === true && (
+        <div className="toggle-container">
+          <img
+            className="close-button"
+            src={closeButton}
+            alt="close-button"
+            onClick={() => setToggle(false)}
+          />
+          <div className="token-container">
+            <div className="token-name">Ethereum</div>
+            <div className="price-container">
+              <span className="price">11</span>
+              <div className="ethereum-wrapper">
+                <img src={ethereum} alt="ethereum" className="ethereum-image" />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
