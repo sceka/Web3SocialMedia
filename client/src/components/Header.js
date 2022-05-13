@@ -4,11 +4,11 @@ import logo from "../statics/metamask.png";
 import Web3 from "web3";
 import ethereum from "../statics/ethereum.png";
 import closeButton from "../statics/close-button.png";
-// import { ethers } from "ethers";
+import contractABI from "../contracts/contractABI.json";
 
 const Header = () => {
   const [address, setAddress] = useState("");
-  // const [balance, setBalance] = useState("");
+  const [balance, setBalance] = useState();
   const [network, setNetwork] = useState("");
   const [toggle, setToggle] = useState(false);
   const [nameNetwork, setNameNetwork] = useState("");
@@ -28,8 +28,6 @@ const Header = () => {
 
         window.ethereum.on("chainChanged", window.location.reload);
         const realAcc = address[0];
-        console.log(web3.utils.isAddress(address[0]));
-        // const balance2 = web3.utils.toChecksumAddress(address[0]);
         const balance1 = web3.eth.getBalance(realAcc).then((res) => {
           console.log(res);
         });
@@ -57,26 +55,38 @@ const Header = () => {
     } else {
       console.log("No network");
     }
-    console.log(network);
   }
 
-  //   function getBalance(address) {
-  //     const balance = window.ethereum
-  //       .request({
-  //         method: "eth_getBalance",
-  //         params: ["latest", address],
-  //       })
-  //       .then((balance) => {
-  //         setBalance(balance);
-  //         console.log(ethers.utils.formatEther(balance));
-  //       });
-  //   }
+  async function getBalance() {
+    var contractAddress = "0x3845badAde8e6dFF049820680d1F14bD3903a5d0";
+    const sandboxAddress = "0x3845badAde8e6dFF049820680d1F14bD3903a5d0";
+    const usdcAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
+    var tokenContract = new web3.eth.Contract(contractABI, sandboxAddress);
+    // var decimal = tokenContract.methods.decimals();
+    var balance = await tokenContract.methods
+      .balanceOf("0x2354Bf8708199FcF272D97095236332D116351C3")
+      .call()
+      .then((res) => console.log(web3.utils.fromWei(res)));
+
+    //  var adjustedBalance = balance / Math.pow(10, decimal);
+    // var tokenName = tokenContract.methods.
+    // .name()
+    // .call()
+    // .then((res) => {
+    //   console.log(res);
+    // });
+    // console.log(tokenName);
+    var tokenSymbol = await tokenContract.methods().name().call();
+    console.log(tokenSymbol);
+  }
 
   return (
     <div className="displaying">
       <div className="container">
-        <div className="logo">Company Name</div>
-        <div>
+        <div className="logo" onClick={getBalance}>
+          Web3 Social Media
+        </div>
+        <div className="balance">
           <div onClick={() => setToggle(true)}>Show balances</div>
         </div>
         <div className="network-container">
@@ -105,6 +115,9 @@ const Header = () => {
                 <img src={ethereum} alt="ethereum" className="ethereum-image" />
               </div>
             </div>
+          </div>
+          <div className="token-container">
+            <div className="token-name">USDC</div>
           </div>
         </div>
       )}
